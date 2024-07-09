@@ -1,6 +1,5 @@
-"use client";
-import { Text, Box, Flex, Heading, IconButton } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
+import { Box, Flex, Heading } from "@chakra-ui/react";
+import RegisterButton from "./RegisterButton";
 
 const Header = () => {
   return (
@@ -13,7 +12,6 @@ const Header = () => {
         top="0"
         left="0"
         width="100%"
-        height="100%"
         zIndex="-1"
         sx={{
           filter: "blur(2px)",
@@ -34,12 +32,7 @@ const Header = () => {
         >
           Mucket List 😋
         </Heading>
-        <IconButton
-          colorScheme={"green"}
-          aria-label="add button"
-          size="sm"
-          icon={<AddIcon w={4} h={4} color="white" />}
-        />
+        <RegisterButton />
       </Flex>
     </Box>
   );
