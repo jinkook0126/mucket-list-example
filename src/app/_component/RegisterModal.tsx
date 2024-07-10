@@ -1,5 +1,4 @@
 "use client";
-import useFoodStore from "@/store/useCardStore";
 import {
   Modal,
   ModalOverlay,
@@ -14,18 +13,18 @@ import {
 } from "@chakra-ui/react";
 import {
   ChangeEventHandler,
-  HTMLInputTypeAttribute,
   useEffect,
   useRef,
   useState,
 } from "react";
+import firestore from "@/firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 
 type TDisclosure = {
   isOpen: boolean;
   onClose: () => void;
 };
 const RegisterModal = ({ isOpen, onClose }: TDisclosure) => {
-  const { register } = useFoodStore();
   const toast = useToast();
   const [mucket, setMucket] = useState<string>("");
   const input = useRef<HTMLInputElement>(null);
@@ -38,7 +37,7 @@ const RegisterModal = ({ isOpen, onClose }: TDisclosure) => {
       }, 100);
     }
   }, [isOpen]);
-  const onRegister = () => {
+  const onRegister = async() => {
     if (mucket === "") {
       toast({
         title: "저장 실패",
@@ -50,7 +49,11 @@ const RegisterModal = ({ isOpen, onClose }: TDisclosure) => {
       });
       return;
     }
-    register(mucket);
+    await addDoc(collection(firestore, `muckets`),{
+      mucket,
+      done:false,
+      createdAt:new Date()
+    })
     onClose();
     setMucket("");
   };

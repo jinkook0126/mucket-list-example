@@ -1,6 +1,6 @@
 export type FoodItem = {
-  idx: number;
-  contents: string;
+  id: string;
+  mucket: string;
   done: boolean;
   date?: Date;
 };
