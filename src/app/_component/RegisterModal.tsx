@@ -11,12 +11,7 @@ import {
   Input,
   useToast,
 } from "@chakra-ui/react";
-import {
-  ChangeEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { ChangeEventHandler, useState } from "react";
 import firestore from "@/firebase/firestore";
 import { collection, addDoc } from "firebase/firestore";
 
@@ -27,17 +22,7 @@ type TDisclosure = {
 const RegisterModal = ({ isOpen, onClose }: TDisclosure) => {
   const toast = useToast();
   const [mucket, setMucket] = useState<string>("");
-  const input = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    if (isOpen) {
-      setTimeout(() => {
-        if (input.current) {
-          input.current.focus();
-        }
-      }, 100);
-    }
-  }, [isOpen]);
-  const onRegister = async() => {
+  const onRegister = async () => {
     if (mucket === "") {
       toast({
         title: "저장 실패",
@@ -49,13 +34,13 @@ const RegisterModal = ({ isOpen, onClose }: TDisclosure) => {
       });
       return;
     }
-    await addDoc(collection(firestore, `muckets`),{
+    await addDoc(collection(firestore, `muckets`), {
       mucket,
-      done:false,
-      createdAt:new Date()
-    })
-    onClose();
+      done: false,
+      createdAt: new Date(),
+    });
     setMucket("");
+    onClose();
   };
   const onChangeInput: ChangeEventHandler<HTMLInputElement> = (e) => {
     setMucket(e.target.value);
@@ -72,7 +57,6 @@ const RegisterModal = ({ isOpen, onClose }: TDisclosure) => {
             placeholder="기가막힌 안주"
             variant={"filled"}
             value={mucket}
-            ref={input}
             onChange={onChangeInput}
           />
         </ModalBody>
