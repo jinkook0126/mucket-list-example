@@ -25,9 +25,9 @@ const Header = () => {
         px={4}
       >
         <Heading
-          color={"#48BB78"}
+          color={"#f7f057"}
           sx={{
-            WebkitTextStroke: "1px #F0FFF4",
+            WebkitTextStroke: "1px #57adbd",
           }}
         >
           Mucket List 😋
