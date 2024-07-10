@@ -2,41 +2,40 @@ import { FoodItem } from "@/types/mucket";
 import { create } from "zustand";
 
 type Store = {
-  cursor: number;
   muckets: FoodItem[];
-  register: (mucket: string) => void;
-  remove: (idx: number) => void;
-  update: (idx: number, state: boolean) => void;
+  register: (mucket: string, id:string) => void;
+  remove: (idx: string) => void;
+  update: (idx: string, state: boolean) => void;
+  setData:(lists:FoodItem[])=>void
 };
 
 const useFoodStore = create<Store>()((set) => ({
   muckets: [],
-  cursor: 0,
-  register: (mucket) =>
+  register: (mucket,id) =>
     set((state) => ({
-      cursor: state.cursor + 1,
       muckets: [
         ...state.muckets,
         {
-          contents: mucket,
+          mucket,
+          id,
           done: false,
-          idx: state.cursor,
         },
       ],
     })),
-  remove: (idx) =>
+  remove: (id) =>
     set((state) => ({
-      muckets: state.muckets.filter((item) => item.idx !== idx),
+      muckets: state.muckets.filter((item) => item.id !== id),
     })),
-  update: (idx, stat) =>
+  update: (id, stat) =>
     set((state) => ({
       muckets: state.muckets.map((item) => {
-        if (item.idx === idx) {
+        if (item.id === id) {
           return { ...item, done: stat, ...(stat && { date: new Date() }) };
         }
         return item;
       }),
     })),
+  setData:(lists)=>set(()=>({muckets:lists}))
 }));
 
 export default useFoodStore;

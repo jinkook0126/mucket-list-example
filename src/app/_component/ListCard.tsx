@@ -11,19 +11,22 @@ import { DeleteIcon, CalendarIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { FoodItem } from "@/types/mucket";
-import useFoodStore from "@/store/useCardStore";
+import { deleteDoc,updateDoc,doc } from 'firebase/firestore'
+import firestore from "@/firebase/firestore";
 
 const ListCard = (params: FoodItem) => {
   const [checked, setChecked] = useState<boolean>(params.done);
-  const { remove, update } = useFoodStore();
-  console.log(params);
+	const document = doc(firestore, 'muckets', params.id);
 
-  const onDelete = () => {
-    remove(params.idx);
+  const onDelete = async () => {
+    await deleteDoc(document);
   };
 
-  const onChange = () => {
-    update(params.idx, !checked);
+  const onChange = async () => {
+    await updateDoc(document, {
+			done: !checked,
+      ...(!checked && { date: new Date() })
+		});
     setChecked(!checked);
   };
 
@@ -43,7 +46,7 @@ const ListCard = (params: FoodItem) => {
                 textDecorationLine={checked ? "line-through" : "none"}
                 color={checked ? "gray.300" : "black"}
               >
-                {params.contents}
+                {params.mucket}
               </Text>
               {checked && (
                 <Flex align={"center"}>
