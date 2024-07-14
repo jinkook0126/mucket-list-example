@@ -3,20 +3,21 @@ import { create } from "zustand";
 
 type Store = {
   muckets: FoodItem[];
-  register: (mucket: string, id:string) => void;
+  register: (mucket: string, id: string, tag: string) => void;
   remove: (idx: string) => void;
   update: (idx: string, state: boolean) => void;
-  setData:(lists:FoodItem[])=>void
+  setData: (lists: FoodItem[]) => void;
 };
 
 const useFoodStore = create<Store>()((set) => ({
   muckets: [],
-  register: (mucket,id) =>
+  register: (mucket, id, tag) =>
     set((state) => ({
       muckets: [
         ...state.muckets,
         {
           mucket,
+          tag,
           id,
           done: false,
         },
@@ -35,7 +36,7 @@ const useFoodStore = create<Store>()((set) => ({
         return item;
       }),
     })),
-  setData:(lists)=>set(()=>({muckets:lists}))
+  setData: (lists) => set(() => ({ muckets: lists })),
 }));
 
 export default useFoodStore;
