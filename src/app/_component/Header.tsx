@@ -1,4 +1,4 @@
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import RegisterButton from "./RegisterButton";
 
 const Header = () => {
@@ -14,7 +14,7 @@ const Header = () => {
         width="100%"
         zIndex="-1"
         sx={{
-          filter: "blur(2px)",
+          filter: "brightness(50%)",
         }}
       />
       <Flex
@@ -24,14 +24,9 @@ const Header = () => {
         justify="space-between"
         px={4}
       >
-        <Heading
-          color={"#f7f057"}
-          sx={{
-            WebkitTextStroke: "1px #57adbd",
-          }}
-        >
-          Mucket List 😋
-        </Heading>
+        <Text fontWeight={700} color={"green.200"} fontSize={30}>
+          먹킷 리스트 😋
+        </Text>
         <RegisterButton />
       </Flex>
     </Box>

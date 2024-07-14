@@ -3,4 +3,5 @@ export type FoodItem = {
   mucket: string;
   done: boolean;
   date?: Date;
+  tag: string;
 };
