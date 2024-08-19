@@ -1,5 +1,6 @@
 import { FoodItem } from "@/types/mucket";
 import { create } from "zustand";
+import dayjs from "dayjs";
 
 type Store = {
   muckets: FoodItem[];
@@ -31,7 +32,11 @@ const useFoodStore = create<Store>()((set) => ({
     set((state) => ({
       muckets: state.muckets.map((item) => {
         if (item.id === id) {
-          return { ...item, done: stat, ...(stat && { date: new Date() }) };
+          return {
+            ...item,
+            done: stat,
+            ...(stat && { date: dayjs().format("YYYY-MM-DD") }),
+          };
         }
         return item;
       }),
